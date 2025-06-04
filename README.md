@@ -1,8 +1,31 @@
-## sbt project compiled with Scala 3
+# Advent of Code 2024 (aoc2024)
 
-### Usage
+This repository contains solutions for the [Advent of Code 2024](https://adventofcode.com/2024) puzzles, implemented in Scala 3 and managed with sbt.
 
-This is a normal sbt project. You can compile code with `sbt compile`, run it with `sbt run`, and `sbt console` will start a Scala 3 REPL.
+## Project Structure
 
-For more information on the sbt-dotty plugin, see the
-[scala3-example-project](https://github.com/scala/scala3-example-project/blob/main/README.md).
+- `src/main/scala/aoc/dXX/DayXX.scala` – Solution for Day XX of the puzzle.
+- `src/main/resources/inputs/dayXX.txt` – Input file for Day XX.
+
+## Requirements
+
+- Java JDK 11 or newer
+- sbt 1.8+
+
+## Usage
+
+Compile all solutions:
+
+```shell
+sbt compile
+```
+
+Run a tests:
+
+```shell
+sbt tests
+```
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
