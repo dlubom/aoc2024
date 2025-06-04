@@ -17,13 +17,13 @@ object Day01 extends Day[Day01.Lists]:
   private val lines: Parser0[Vector[(Long, Long)]] =
     line.repSep0(P.char('\n')).map(_.toVector)
 
-  def parse(input: String): Lists =
+  def parse(input: String): Either[String, Lists] =
     lines.parseAll(input.trim) match
       case Right(v) =>
         val (l, r) = v.unzip
-        Lists(l, r)
+        Right(Lists(l, r))
       case Left(err) =>
-        throw new RuntimeException(s"Parse error: $err")
+        Left(s"Parse error: $err")
 
   def part1(data: Lists): String =
     val left = data.left.sorted
