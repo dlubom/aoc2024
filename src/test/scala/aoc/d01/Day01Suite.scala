@@ -13,20 +13,28 @@ class Day01Suite extends FunSuite:
 
   // --- Sample tests -------------------------------------------------------
   test("part1 sample distance = 11") {
-    assertEquals(Day01.part1(Day01.parse(sample)), "11")
+    Day01.parse(sample) match
+      case Right(data) => assertEquals(Day01.part1(data), "11")
+      case Left(error) => fail(s"Parse failed: $error")
   }
 
   test("part2 sample similarity = 31") {
-    assertEquals(Day01.part2(Day01.parse(sample)), "31")
+    Day01.parse(sample) match
+      case Right(data) => assertEquals(Day01.part2(data), "31")
+      case Left(error) => fail(s"Parse failed: $error")
   }
 
   // --- Regression tests on the full input ---------------------------------
   test("part1 actual answer") {
     val input = scala.io.Source.fromResource("inputs/day01.txt").mkString
-    assertEquals(Day01.part1(Day01.parse(input)), "1873376")
+    Day01.parse(input) match
+      case Right(data) => assertEquals(Day01.part1(data), "1873376")
+      case Left(error) => fail(s"Parse failed: $error")
   }
 
   test("part2 actual answer") {
     val input = scala.io.Source.fromResource("inputs/day01.txt").mkString
-    assertEquals(Day01.part2(Day01.parse(input)), "18997088")
+    Day01.parse(input) match
+      case Right(data) => assertEquals(Day01.part2(data), "18997088")
+      case Left(error) => fail(s"Parse failed: $error")
   }

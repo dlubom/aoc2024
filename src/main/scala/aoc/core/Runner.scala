@@ -11,6 +11,9 @@ object Runner:
     val d = days(day)
 
     val input = Source.fromResource(s"inputs/day${day.formatted("%02d")}.txt").mkString
-    val (p1, p2) = d.run(input)
-    println(s"Day $day - part 1: $p1")
-    println(s"Day $day - part 2: $p2")
+    d.run(input) match
+      case Right((p1, p2)) =>
+        println(s"Day $day - part 1: $p1")
+        println(s"Day $day - part 2: $p2")
+      case Left(error) =>
+        println(s"Error running Day $day: $error")
