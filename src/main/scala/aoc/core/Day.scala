@@ -1,9 +1,9 @@
 package aoc.core
 
-trait Day:
-  def parse(input: String): Any
-  def part1(data: Any): String
-  def part2(data: Any): String
+trait Day[T]:
+  def parse(input: String): T
+  def part1(data: T): String
+  def part2(data: T): String
 
   final def run(raw: String): (String, String) =
     val parsed = parse(raw.trim)

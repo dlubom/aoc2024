@@ -3,7 +3,7 @@ package aoc.d01
 import aoc.core.Day
 import cats.parse.{Parser => P, Parser0}
 
-object Day01 extends Day:
+object Day01 extends Day[Day01.Lists]:
 
   case class Lists(left: Vector[Long], right: Vector[Long])
 
@@ -25,21 +25,19 @@ object Day01 extends Day:
       case Left(err) =>
         throw new RuntimeException(s"Parse error: $err")
 
-  def part1(data: Any): String =
-    val lists = data.asInstanceOf[Lists]
-    val left = lists.left.sorted
-    val right = lists.right.sorted
+  def part1(data: Lists): String =
+    val left = data.left.sorted
+    val right = data.right.sorted
     left
       .zip(right)
       .map((l, r) => math.abs(l - r))
       .sum
       .toString
 
-  def part2(data: Any): String =
-    val lists = data.asInstanceOf[Lists]
-    val counts: Map[Long, Int] = lists.right.groupBy(identity).view.mapValues(_.size).toMap
+  def part2(data: Lists): String =
+    val counts: Map[Long, Int] = data.right.groupBy(identity).view.mapValues(_.size).toMap
 
-    lists.left
+    data.left
       .map(l => l * counts.getOrElse(l, 0))
       .sum
       .toString

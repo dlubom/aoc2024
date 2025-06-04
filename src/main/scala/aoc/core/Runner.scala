@@ -4,7 +4,7 @@ import scala.io.Source
 
 object Runner:
 
-  private val days: Map[Int, Day] =
+  private val days: Map[Int, Day[?]] =
     Map(1 -> aoc.d01.Day01 /*, 2 -> Day02 … */ )
 
   @main def run(day: Int): Unit =
