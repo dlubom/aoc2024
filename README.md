@@ -27,10 +27,10 @@ Run tests:
 sbt test
 ```
 
-Run a specific day (e.g. Day 3):
+Run a specific day (e.g. Day 1):
 
 ```shell
-sbt "run 3"
+sbt "run 1"
 ```
 
 ## License
