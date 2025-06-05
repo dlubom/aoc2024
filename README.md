@@ -32,6 +32,17 @@ Run a specific day (e.g. Day 1):
 ```shell
 sbt "run 1"
 ```
+or 
+
+```shell
+sbt "run 1 2 3"
+```
+
+or run all
+
+```shell
+sbt "run all"
+```
 
 ## License
 
