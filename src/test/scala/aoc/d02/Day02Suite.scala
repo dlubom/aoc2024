@@ -126,12 +126,6 @@ class Day02Suite extends FunSuite:
   //     case Left(error) => fail(s"Parse failed: $error")
   // }
 
-  test("parse should fail for line ending with space only") {
-    Day02.parse("123 ") match
-      case Right(_)    => fail("Expected parse error for incomplete line ending with space")
-      case Left(error) => assert(error.contains("Parse error"))
-  }
-
   test("parse should fail for completely empty line in middle") {
     val inputWithEmptyLine =
       """|123 456

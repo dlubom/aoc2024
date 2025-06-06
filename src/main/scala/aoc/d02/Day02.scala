@@ -23,13 +23,19 @@ object Day02 extends Day[Day02.Data]:
       case Left(err) =>
         Left(s"Parse error: $err")
 
-  private def isSafe(row: List[Int]): Boolean =
+  private def isSafePart1(row: List[Int]): Boolean =
     val diffs = row.iterator.sliding(2).map { case Seq(a, b) => b - a }.toSet
     diffs.nonEmpty && (diffs.subsetOf(allowedIncreasing) || diffs.subsetOf(allowedDecreasing))
 
   def part1(data: Data): String =
-    data.list.count(isSafe).toString
+    data.list.count(isSafePart1).toString
+
+  private def isSafePart2(row: List[Int]): Boolean =
+    isSafePart1(row) ||
+      row.indices.exists { i =>
+        val shortened = row.take(i) ++ row.drop(i + 1)
+        isSafePart1(shortened)
+      }
 
   def part2(data: Data): String =
-    val list = data.list
-    list.length.toString
+    data.list.count(isSafePart2).toString
