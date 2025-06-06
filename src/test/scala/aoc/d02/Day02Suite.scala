@@ -1,0 +1,172 @@
+package aoc.d02
+
+import munit.FunSuite
+
+class Day02Suite extends FunSuite:
+  private val sample =
+    """|7 6 4 2 1
+       |1 2 7 8 9
+       |9 7 6 2 1
+       |1 3 2 4 5
+       |8 6 4 4 1
+       |1 3 6 7 9""".stripMargin
+
+  // --- Parsing error tests ------------------------------------------------
+  test("parse empty input") {
+    Day02.parse("") match
+      case Right(data) =>
+        assertEquals(data.list.length, 0)
+      case Left(error) => fail(s"Expected success for empty input, got: $error")
+  }
+
+  test("parse single line") {
+    Day02.parse("42 99") match
+      case Right(data) =>
+        assertEquals(data.list, List(List(42, 99)))
+      case Left(error) => fail(s"Parse failed: $error")
+  }
+
+  // test("parse line with tabs") {
+  //   Day02.parse("123\t\t456") match
+  //     case Right(data) =>
+  //       assertEquals(data.left, Vector(123L))
+  //       assertEquals(data.right, Vector(456L))
+  //     case Left(error) => fail(s"Parse failed: $error")
+  // }
+
+  // test("parse line with mixed whitespace") {
+  //   Day02.parse("789 \t \t 321") match
+  //     case Right(data) =>
+  //       assertEquals(data.left, Vector(789L))
+  //       assertEquals(data.right, Vector(321L))
+  //     case Left(error) => fail(s"Parse failed: $error")
+  // }
+
+  // test("parse should fail for line with only one number") {
+  //   Day02.parse("123") match
+  //     case Right(_)    => fail("Expected parse error for incomplete line")
+  //     case Left(error) => assert(error.contains("Parse error"))
+  // }
+
+  // test("parse should fail for line with non-numeric text") {
+  //   Day02.parse("abc 123") match
+  //     case Right(_)    => fail("Expected parse error for non-numeric input")
+  //     case Left(error) => assert(error.contains("Parse error"))
+  // }
+
+  // test("parse should fail for line with three numbers") {
+  //   Day02.parse("123 456 789") match
+  //     case Right(_)    => fail("Expected parse error for too many numbers")
+  //     case Left(error) => assert(error.contains("Parse error"))
+  // }
+
+  // test("parse should fail for negative numbers") {
+  //   Day02.parse("-123 456") match
+  //     case Right(_)    => fail("Expected parse error for negative numbers")
+  //     case Left(error) => assert(error.contains("Parse error"))
+  // }
+
+  // test("parse should fail for floating point numbers") {
+  //   Day02.parse("123.45 678") match
+  //     case Right(_)    => fail("Expected parse error for floating point numbers")
+  //     case Left(error) => assert(error.contains("Parse error"))
+  // }
+
+  // test("parse mixed valid and invalid lines") {
+  //   val invalidInput =
+  //     """|123 456
+  //        |invalid line
+  //        |789 012""".stripMargin
+
+  //   Day02.parse(invalidInput) match
+  //     case Right(_)    => fail("Expected parse error for mixed valid/invalid input")
+  //     case Left(error) => assert(error.contains("Parse error"))
+  // }
+
+  // test("parse should fail with trailing whitespace on line") {
+  //   Day02.parse("123 456   \n789 012   ") match
+  //     case Right(_)    => fail("Expected parse error for trailing whitespace")
+  //     case Left(error) => assert(error.contains("Parse error"))
+  // }
+
+  // test("parse should succeed without trailing whitespace") {
+  //   Day02.parse("123 456\n789 012") match
+  //     case Right(data) =>
+  //       assertEquals(data.left, Vector(123L, 789L))
+  //       assertEquals(data.right, Vector(456L, 12L))
+  //     case Left(error) => fail(s"Parse failed: $error")
+  // }
+
+  // test("parse should fail for extra spaces between numbers") {
+  //   Day02.parse("123    456") match
+  //     case Right(data) =>
+  //       assertEquals(data.left, Vector(123L))
+  //       assertEquals(data.right, Vector(456L))
+  //     case Left(error) => fail(s"Parse failed: $error")
+  // }
+
+  // test("parse should fail for numbers with leading zeros") {
+  //   Day02.parse("0123 0456") match
+  //     case Right(data) =>
+  //       assertEquals(data.left, Vector(123L))
+  //       assertEquals(data.right, Vector(456L))
+  //     case Left(error) => fail(s"Parse failed: $error")
+  // }
+
+  // test("parse should handle very long lines") {
+  //   val longInput = (1 to 100).map(i => s"$i ${i * 2}").mkString("\n")
+  //   Day02.parse(longInput) match
+  //     case Right(data) =>
+  //       assertEquals(data.left.size, 100)
+  //       assertEquals(data.right.size, 100)
+  //       assertEquals(data.left.head, 1L)
+  //       assertEquals(data.right.head, 2L)
+  //       assertEquals(data.left.last, 100L)
+  //       assertEquals(data.right.last, 200L)
+  //     case Left(error) => fail(s"Parse failed: $error")
+  // }
+
+  test("parse should fail for line ending with space only") {
+    Day02.parse("123 ") match
+      case Right(_)    => fail("Expected parse error for incomplete line ending with space")
+      case Left(error) => assert(error.contains("Parse error"))
+  }
+
+  test("parse should fail for completely empty line in middle") {
+    val inputWithEmptyLine =
+      """|123 456
+         |
+         |789 012""".stripMargin
+
+    Day02.parse(inputWithEmptyLine) match
+      case Right(_)    => fail("Expected parse error for empty line in middle")
+      case Left(error) => assert(error.contains("Parse error"))
+  }
+
+  // --- Sample tests -------------------------------------------------------
+  test("part1 sefe reports = 2") {
+    Day02.parse(sample) match
+      case Right(data) => assertEquals(Day02.part1(data), "2")
+      case Left(error) => fail(s"Parse failed: $error")
+  }
+
+  test("part2 safe reports = 4") {
+    Day02.parse(sample) match
+      case Right(data) => assertEquals(Day02.part2(data), "4")
+      case Left(error) => fail(s"Parse failed: $error")
+  }
+
+  // --- Regression tests on the full input ---------------------------------
+  test("part1 actual answer") {
+    val input = scala.io.Source.fromResource("inputs/day02.txt").mkString
+    Day02.parse(input) match
+      case Right(data) => assertEquals(Day02.part1(data), "663")
+      case Left(error) => fail(s"Parse failed: $error")
+  }
+
+  test("part2 actual answer") {
+    val input = scala.io.Source.fromResource("inputs/day02.txt").mkString
+    Day02.parse(input) match
+      case Right(data) => assertEquals(Day02.part2(data), "692")
+      case Left(error) => fail(s"Parse failed: $error")
+  }

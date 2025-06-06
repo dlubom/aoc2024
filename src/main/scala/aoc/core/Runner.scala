@@ -7,8 +7,8 @@ object Runner:
 
   private val days: Map[Int, Day[?]] =
     Map(
-      1 -> aoc.d01.Day01
-      // 2 -> aoc.d02.Day02,
+      1 -> aoc.d01.Day01,
+      2 -> aoc.d02.Day02
       // …
     )
 
