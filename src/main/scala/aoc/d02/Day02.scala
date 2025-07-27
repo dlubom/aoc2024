@@ -17,8 +17,27 @@ object Day02 extends Day[List[List[Int]]]:
       case Right(v)  => Right(v)
       case Left(err) => Left(s"Parse error: $err")
 
-  def part1(data: List[List[Int]]): String =
-    "Not implemented yet"
+  private def isSafe(levels: List[Int]): Boolean = {
+    if (levels.length < 2) return false
 
-  def part2(data: List[List[Int]]): String =
-    "Not implemented yet"
+    val diffs = levels.sliding(2).map { case List(a, b) => b - a }.toList
+    val strictlyIncreasing = diffs.forall(_ > 0)
+    val strictlyDecreasing = diffs.forall(_ < 0)
+    val monotonic = strictlyIncreasing || strictlyDecreasing
+    val differencesOK = diffs.forall(d => math.abs(d) >= 1 && math.abs(d) <= 3)
+
+    monotonic && differencesOK
+  }
+  
+  def part1(data: List[List[Int]]): String =
+    data.count { levels => isSafe(levels)
+    }.toString
+
+  def part2(data: List[List[Int]]): String = {
+    data.count { levels =>
+      levels.indices.exists { i =>
+        val newLevels = levels.take(i) ++ levels.drop(i + 1)
+        isSafe(newLevels)
+      }
+    }.toString
+  }
