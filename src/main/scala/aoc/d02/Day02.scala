@@ -18,6 +18,7 @@ object Day02 extends Day[List[List[Int]]]:
       case Left(err) => Left(s"Parse error: $err")
 
   private def isSafe(levels: List[Int]): Boolean = {
+    // TODO one pass using tail recursion
     if (levels.length < 2) return false
 
     val diffs = levels.sliding(2).map { case List(a, b) => b - a }.toList
@@ -35,9 +36,6 @@ object Day02 extends Day[List[List[Int]]]:
 
   def part2(data: List[List[Int]]): String = {
     data.count { levels =>
-      levels.indices.exists { i =>
-        val newLevels = levels.take(i) ++ levels.drop(i + 1)
-        isSafe(newLevels)
-      }
+      levels.indices.exists { i => isSafe(levels.patch(i, Nil, 1))}
     }.toString
   }
