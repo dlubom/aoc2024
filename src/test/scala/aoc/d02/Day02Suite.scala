@@ -82,14 +82,14 @@ class Day02Suite extends FunSuite:
 
   // --- Regression tests on the full input ---------------------------------
   test("part1 actual answer") {
-    val input = scala.io.Source.fromResource("inputs/day01.txt").mkString
+    val input = scala.io.Source.fromResource("inputs/day02.txt").mkString
     Day02.parse(input) match
       case Right(data) => assertEquals(Day02.part1(data), "663")
       case Left(error) => fail(s"Parse failed: $error")
   }
 
   test("part2 actual answer") {
-    val input = scala.io.Source.fromResource("inputs/day01.txt").mkString
+    val input = scala.io.Source.fromResource("inputs/day02.txt").mkString
     Day02.parse(input) match
       case Right(data) => assertEquals(Day02.part2(data), "692")
       case Left(error) => fail(s"Parse failed: $error")
